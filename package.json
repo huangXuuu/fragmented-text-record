@@ -1,0 +1,100 @@
+{
+  "name": "fragmented-text-record",
+  "version": "0.0.0",
+  "main": "public/electron.js",
+  "scripts": {
+    "ng": "ng",
+    "ng-start": "ng serve --port 4201",
+    "electron-start": "electron .",
+    "start": "concurrently \"npm run ng-start\" \"npm run electron-start\"",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "electron:linux": "npm run build && electron-builder build --linux",
+    "electron:windows": "npm run build && electron-builder build --windows",
+    "electron:mac": "npm run build && electron-builder build --mac"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "9.1.0",
+    "@angular/common": "9.1.0",
+    "@angular/compiler": "9.1.0",
+    "@angular/core": "9.1.0",
+    "@angular/forms": "9.1.0",
+    "@angular/platform-browser": "9.1.0",
+    "@angular/platform-browser-dynamic": "9.1.0",
+    "@angular/router": "9.1.0",
+    "csv": "5.3.2",
+    "fs-extra": "9.0.0",
+    "lodash": "4.17.15",
+    "ng-zorro-antd": "8.5.2",
+    "rxjs": "6.5.4",
+    "tslib": "1.10.0",
+    "zone.js": "0.10.2",
+    "electron-is-dev": "1.1.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "0.901.0",
+    "@angular/cli": "9.1.0",
+    "@angular/compiler-cli": "9.1.0",
+    "@angular/language-service": "9.1.0",
+    "@types/jasmine": "3.5.0",
+    "@types/jasminewd2": "2.0.3",
+    "@types/node": "12.12.35",
+    "codelyzer": "5.1.2",
+    "electron": "8.2.2",
+    "electron-builder": "22.6.0",
+    "jasmine-core": "3.5.0",
+    "jasmine-spec-reporter": "4.2.1",
+    "karma": "4.4.1",
+    "karma-chrome-launcher": "3.1.0",
+    "karma-coverage-istanbul-reporter": "2.1.0",
+    "karma-jasmine": "3.0.1",
+    "karma-jasmine-html-reporter": "1.4.2",
+    "protractor": "5.4.3",
+    "ts-node": "8.3.0",
+    "tslint": "6.1.0",
+    "typescript": "3.8.3",
+    "concurrently": "5.1.0"
+  },
+  "build": {
+    "productName": "BMeasy",
+    "directories": {
+      "output": "release/"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!*.code-workspace",
+      "!LICENSE.md",
+      "!package.json",
+      "!package-lock.json",
+      "!src/",
+      "!e2e/",
+      "!hooks/",
+      "!angular.json",
+      "!_config.yml",
+      "!karma.conf.js",
+      "!tsconfig.json",
+      "!tslint.json"
+    ],
+    "win": {
+      "icon": "dist/assets/icons",
+      "target": [
+        "portable"
+      ]
+    },
+    "mac": {
+      "icon": "dist/assets/icons",
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "icon": "dist/assets/icons",
+      "target": [
+        "AppImage"
+      ]
+    }
+  }
+}
