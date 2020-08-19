@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    build:
+      context: ./elasticsearch
+    image: tacit-db-elasticsearch:latest
+    volumes:
+      - ./data/volumes/esdata:/usr/share/elasticsearch/data
+      - ./data/resource:/var/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      # ELASTIC_PASSWORD: noah2020
+      discovery.type: single-node
