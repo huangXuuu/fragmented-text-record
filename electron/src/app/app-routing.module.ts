@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
+import { MainComponent } from './main/main.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'layout',
+    redirectTo: 'main',
     pathMatch: 'full'
   },
   {
-      path: 'layout',
-      component: LayoutComponent
+      path: 'main',
+      component: MainComponent
   },
 
 ];

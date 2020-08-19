@@ -1,0 +1,67 @@
+<!-- <div class="title">碎片式文字记录系统</div> -->
+<div class="background">
+  <div class="pageContainer">
+    <nz-card [nzBordered]="false">
+      <div nz-row>
+        <div nz-col [nzSpan]="6" class="pr-4">
+          <label>分类</label>
+          <nz-input-group [nzSuffix]="classSuffixTemplate">
+            <input nz-input placeholder="请输入或选择分类" [nzAutocomplete]="auto" [(ngModel)]="searchForm.class"
+              (ngModelChange)="onClassModelChange($event)">
+          </nz-input-group>
+          <nz-autocomplete #auto>
+            <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item">{{item}}</nz-auto-option>
+          </nz-autocomplete>
+          <ng-template #classSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+              nzType="close-circle" *ngIf="searchForm.class" (click)="classClear()"></i></ng-template>
+        </div>
+        <div nz-col [nzSpan]="6" class="pr-4">
+          <label>标题</label>
+          <nz-input-group [nzSuffix]="titleSuffixTemplate">
+            <input nz-input placeholder="标题" [(ngModel)]="searchForm.title" />
+          </nz-input-group>
+          <ng-template #titleSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+              nzType="close-circle" *ngIf="searchForm.title" (click)="searchForm.title = ''"></i></ng-template>
+        </div>
+        <div nz-col [nzSpan]="12" class="pr-4">
+          <label>日期</label>
+          <div>
+            <nz-range-picker [nzFormat]="'yyyy/MM/dd'" [(ngModel)]="searchForm.date"></nz-range-picker>
+          </div>
+        </div>
+      </div>
+      <div nz-row class="mt-4">
+        <div nz-col [nzSpan]="24">
+          <label>关键字</label>
+          <nz-input-group [nzSuffix]="contentSuffixTemplate">
+            <input nz-input placeholder="请输入关键字" [(ngModel)]="searchForm.content" />
+          </nz-input-group>
+          <ng-template #contentSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+              nzType="close-circle" *ngIf="searchForm.content" (click)="searchForm.content = ''"></i>
+          </ng-template>
+        </div>
+      </div>
+      <div nz-row class="mt-4">
+        <button class="mr-4" nz-button nzType="primary" (click)="onSearch()">
+          <i nz-icon nzType="search" nzTheme="outline"></i>搜索
+        </button>
+        <button nz-button nzType="primary" (click)="onClear()">
+          <i nz-icon nzType="rest" nzTheme="outline"></i>清空
+        </button>
+      </div>
+    </nz-card>
+    <nz-card [nzBordered]="false" class="mt-4">
+      <div class="listContainer">
+        <nz-list [nzLoading]="loading">
+          <nz-list-item class="contentList" *ngFor="let item of data; index as i">
+            <app-list-item (itemChage)="onListItemChange($event)" [data]="item" [index]="i">
+            </app-list-item>
+          </nz-list-item>
+        </nz-list>
+        <div class="listEmpty" *ngIf="searched && data && data.length === 0">
+          <p>无匹配数据</p>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+</div>
