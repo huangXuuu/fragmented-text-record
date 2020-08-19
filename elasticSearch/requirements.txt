@@ -1,0 +1,3 @@
+elasticsearch==7.8.0
+requests==2.24.0
+tika==1.24

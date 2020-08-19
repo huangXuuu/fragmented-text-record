@@ -1,13 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgZorroAntdModule, NZ_I18N, ja_JP, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzConfig, NZ_CONFIG } from 'ng-zorro-antd';
+
 
 import { AppRoutingModule } from './app-routing.module';
+import { EscapeHtmlModule } from './shared/keep-html/keep-html.module';
 import { AppComponent } from './app.component';
-import { LayoutComponent } from './layout/layout.component';
+import { SearchListComponent } from './searchList/searchList.component';
+import { EditAreaComponent } from './editArea/editArea.component';
+import { MainComponent } from './main/main.component';
+import { ListItemComponent } from './shared/listItem/listItem.component';
+
+
+import zh from '@angular/common/locales/zh';
+registerLocaleData(zh);
 
 const ngZorroConfig: NzConfig = {
   modal: { nzMaskClosable: false } // ダイアログの幅
@@ -16,7 +26,10 @@ const ngZorroConfig: NzConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    LayoutComponent
+    SearchListComponent,
+    ListItemComponent,
+    MainComponent,
+    EditAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -26,10 +39,10 @@ const ngZorroConfig: NzConfig = {
     AppRoutingModule,
     NgZorroAntdModule,
     ReactiveFormsModule,
+    EscapeHtmlModule
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: NZ_I18N, useValue: ja_JP },
     { provide: NZ_CONFIG, useValue: ngZorroConfig }
   ]
 })
