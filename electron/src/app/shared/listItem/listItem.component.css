@@ -1,0 +1,19 @@
+.contentContainer {
+  position: relative;
+}
+
+.editBtnArea {
+  position: absolute;
+  right: 10px;
+  top: -5px;
+}
+
+.contents {
+  font-size: 15px;
+  margin-top: 10;
+}
+
+.foot {
+  display: flex;
+  color: #96999c;
+}

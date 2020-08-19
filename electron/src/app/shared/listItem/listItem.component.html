@@ -1,0 +1,72 @@
+<div class="contentContainer">
+  <div class="editBtnArea">
+    <button *ngIf="editType === 'preview'" class="mr-2" nz-button nzType="primary" (click)="toEdit()" nz-popover
+      [nzPopoverContent]="'修改'" nzPopoverTrigger="hover">
+      <i nz-icon nzType="edit" nzTheme="outline"></i>
+    </button>
+    <button *ngIf="editType === 'preview'" nz-button nzType="danger" nz-popover
+      [nzPopoverContent]="'删除'" nzPopoverTrigger="hover" nz-popconfirm
+      nzPopconfirmTitle="确定要删除吗？" (nzOnConfirm)="onDelete()">
+      <i nz-icon nzType="delete" nzTheme="outline"></i>
+    </button>
+  </div>
+  <div class="editBtnArea">
+    <button *ngIf="editType === 'edit'" class="mr-2" nz-button nzType="primary" nz-popover
+      [nzPopoverContent]="'保存'" nzPopoverTrigger="hover" nz-popconfirm
+      nzPopconfirmTitle="确定要保存吗？" (nzOnConfirm)="onSave()">
+      <i nz-icon nzType="save" nzTheme="outline"></i>
+    </button>
+    <button *ngIf="editType === 'edit'" nz-button nzType="danger" (click)="toPreview()" nz-popover
+      [nzPopoverContent]="'退回阅览模式'" nzPopoverTrigger="hover">
+      <i nz-icon nzType="undo" nzTheme="outline"></i>
+    </button>
+  </div>
+  <div *ngIf="editType === 'preview'">
+    <div class="foot">
+      <div class="mr-4 highlightContainer">
+        <span>分类: </span>
+        <span class="highlightContainer" [innerHtml]="data.class | keepHtml"></span>
+      </div>
+      <div class="mr-4">
+        <span>标题: </span>
+        <span class="highlightContainer" [innerHtml]="data.title | keepHtml"></span>
+      </div>
+      <div class="mr-4">
+        <span>创建时间: </span>
+        <span >{{data.createDate}}</span>
+      </div>
+      <div class="mr-4">
+        <span>最后更新时间: </span>
+        <span >{{data.updateDate}}</span>
+      </div>
+    </div>
+    <div>内容:</div>
+    <p class="ml-2 contents highlightContainer" [innerHtml]="data.content | keepHtml"></p>
+  </div>
+  <div *ngIf="editType === 'edit'">
+    <div class="foot">
+      <div class="mr-4 highlightContainer">
+        <span>分类: </span>
+        <nz-input-group [nzSuffix]="classSuffixTemplate">
+          <input nz-input placeholder="请输入或选择分类" [nzAutocomplete]="auto" [(ngModel)]="data.class"
+            (ngModelChange)="onClassModelChange($event)">
+        </nz-input-group>
+        <nz-autocomplete #auto>
+          <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item">{{item}}</nz-auto-option>
+        </nz-autocomplete>
+        <ng-template #classSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+            nzType="close-circle" *ngIf="data.class" (click)="data.class = ''"></i></ng-template>
+      </div>
+      <div class="mr-4">
+        <span>标题: </span>
+        <nz-input-group [nzSuffix]="titleSuffixTemplate">
+          <input nz-input placeholder="标题" [(ngModel)]="data.title" />
+        </nz-input-group>
+        <ng-template #titleSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+            nzType="close-circle" *ngIf="data.title" (click)="data.title = ''"></i></ng-template>
+      </div>
+    </div>
+    <div>内容:</div>
+    <textarea class="contentInput" nz-input [(ngModel)]="data.content"></textarea>
+  </div>
+</div>

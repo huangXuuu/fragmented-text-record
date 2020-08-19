@@ -1,0 +1,14 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+http.cors.allow-headers: X-Requested-With, X-Auth-Token, Content-Type, Content-Length, Authorization, Access-Control-Allow-Headers, Accept
+http.cors.allow-methods: OPTIONS, HEAD, GET, POST, PUT, DELETE
+
+xpack.license.self_generated.type: basic
+# xpack.security.enabled: true
+xpack.monitoring.collection.enabled: true
+
+# index.analysis.analyzer.default.type: custom # 追加
+# index.analysis.analyzer.default.tokenizer: kuromoji_tokenizer # 追加
