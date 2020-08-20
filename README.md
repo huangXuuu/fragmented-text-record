@@ -1,5 +1,5 @@
 # fragmented-text-record
-碎片式文字记录
+一个简单的碎片式文字记录系统，用以记录日常工作生活中的零碎内容
 
 ## 需要的环境：
 * elasticSearch 7.8.0
