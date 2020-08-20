@@ -82,7 +82,7 @@
       "!tslint.json"
     ],
     "win": {
-      "icon": "dist/assets/icons/icon.ico"
+      "icon": "dist/assets/icons/favicon.ico"
     },
     "mac": {
       "icon": "dist/assets/icons/icon.icns"
