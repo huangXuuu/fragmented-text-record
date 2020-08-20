@@ -9,27 +9,32 @@ const isDev = require('electron-is-dev');
 // electron.Menu.setApplicationMenu(null);
 
 let mainWindow;
-const instances = [];
 let cmdQPressed = false;
 
 function createWindow() {
   require('./ipcMain');
-  mainWindow = new BrowserWindow({
-    show: false,
-    minWidth: 900,
-    minHeight: 600,
-    webPreferences: {
-      nodeIntegration: false,
-      webSecurity: false,
-      preload: __dirname + '/preload.js'
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
     }
-  });
-  mainWindow.maximize();
-  mainWindow.loadURL(isDev ? 'http://localhost:4201' : `file://${path.join(__dirname, '../dist/index.html')}`);
-
-  mainWindow.on('closed', () => (mainWindow = null));
-  mainWindow.show();
-  instances.push(mainWindow);
+    mainWindow.focus();
+    mainWindow.show();
+  } else {
+    mainWindow = new BrowserWindow({
+      show: false,
+      minWidth: 900,
+      minHeight: 600,
+      webPreferences: {
+        nodeIntegration: false,
+        webSecurity: false,
+        preload: __dirname + '/preload.js'
+      }
+    });
+    mainWindow.loadURL(isDev ? 'http://localhost:4201' : `file://${path.join(__dirname, '../dist/index.html')}`);
+  
+    mainWindow.on('closed', () => (mainWindow = null));
+    mainWindow.show();
+  }
 }
 
 const gotTheLock = app.requestSingleInstanceLock();
