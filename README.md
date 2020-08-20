@@ -16,3 +16,9 @@
 * npm run electron:windows
 * npm run electron:linux
 * npm run electron:mac
+
+## 配置【分类】项目的下拉选项列表
+将electron/resources文件夹及其中的csv拷贝至exe同级目录下
+注意：
+* csv编码必须为utf-8
+* csv只能有一列
