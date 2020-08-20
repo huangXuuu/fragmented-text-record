@@ -18,10 +18,10 @@ export class IpcRendererService {
   }
 
   on(message: string, done) {
-    return window.ipcRenderer.on(message, done);
+    // return window.ipcRenderer.on(message, done);
   }
 
   send(message: string, ...args) {
-    window.ipcRenderer.send(message, args);
+    // window.ipcRenderer.send(message, args);
   }
 }

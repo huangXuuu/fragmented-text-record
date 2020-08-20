@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fragmented-text-record": {
+    "FRAGMENTED": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -79,18 +79,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fragmented-text-record:build"
+            "browserTarget": "FRAGMENTED:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fragmented-text-record:build:production"
+              "browserTarget": "FRAGMENTED:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fragmented-text-record:build"
+            "browserTarget": "FRAGMENTED:build"
           }
         },
         "test": {
@@ -127,18 +127,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "fragmented-text-record:serve"
+            "devServerTarget": "FRAGMENTED:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "fragmented-text-record:serve:production"
+              "devServerTarget": "FRAGMENTED:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "fragmented-text-record",
+  "defaultProject": "FRAGMENTED",
   "cli": {
     "analytics": "82e8c091-706b-4f7e-9c84-88af510c960e"
   }

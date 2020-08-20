@@ -1,5 +1,5 @@
 {
-  "name": "fragmented-text-record",
+  "name": "fragmented",
   "version": "0.0.0",
   "main": "public/electron.js",
   "scripts": {

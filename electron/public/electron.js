@@ -6,7 +6,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
-// electron.Menu.setApplicationMenu(null);
+electron.Menu.setApplicationMenu(null);
 
 let mainWindow;
 let cmdQPressed = false;
