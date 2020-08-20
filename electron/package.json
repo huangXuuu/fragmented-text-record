@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build": "ng build -c static --base-href ''",
+    "build": "ng build -c production --base-href ''",
     "electron:linux": "npm run build && electron-builder build --linux",
     "electron:windows": "npm run build && electron-builder build --windows",
     "electron:mac": "npm run build && electron-builder build --mac"
@@ -31,6 +31,7 @@
     "fs-extra": "9.0.0",
     "lodash": "4.17.15",
     "ng-zorro-antd": "8.5.2",
+    "node-xlsx": "^0.15.0",
     "rxjs": "6.5.4",
     "tslib": "1.10.0",
     "zone.js": "0.10.2"
@@ -60,7 +61,7 @@
     "concurrently": "5.1.0"
   },
   "build": {
-    "productName": "BMeasy",
+    "productName": "fragmented",
     "directories": {
       "output": "release/"
     },
@@ -81,22 +82,13 @@
       "!tslint.json"
     ],
     "win": {
-      "icon": "dist/assets/icons",
-      "target": [
-        "portable"
-      ]
+      "icon": "dist/assets/icons/icon.ico"
     },
     "mac": {
-      "icon": "dist/assets/icons",
-      "target": [
-        "dmg"
-      ]
+      "icon": "dist/assets/icons/icon.icns"
     },
     "linux": {
-      "icon": "dist/assets/icons",
-      "target": [
-        "AppImage"
-      ]
+      "icon": "dist/assets/icons/icon.icns"
     }
   }
 }

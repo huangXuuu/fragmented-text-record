@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  useJson: false,
+  production: false,
+  restBaseUrl: 'http://localhost:9200',
+  restRetry: 0,
 };

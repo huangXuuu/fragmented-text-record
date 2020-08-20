@@ -17,3 +17,7 @@
   display: flex;
   color: #96999c;
 }
+
+.contentInput {
+  height: 200px;
+}

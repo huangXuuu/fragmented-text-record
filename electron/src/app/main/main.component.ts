@@ -14,4 +14,6 @@ export class MainComponent {
     e.clearRecode.emit();
   }
 
+  onImport() {}
+
 }

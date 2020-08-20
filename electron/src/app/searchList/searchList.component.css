@@ -1,0 +1,19 @@
+.exportCheckbox {
+  width: 30px;
+}
+
+app-list-item {
+  width: 100%;
+}
+
+.tableContainer {
+  margin-top: 15px;
+}
+
+.tableContainer >>> .ant-card-head {
+  border-bottom: none;
+}
+
+.tableContainer >>> .ant-card-body {
+  padding: 0px !important;
+}

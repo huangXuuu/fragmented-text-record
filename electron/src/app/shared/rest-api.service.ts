@@ -26,7 +26,7 @@ export class RestApiService {
   constructor(private restService: RestService,
     private modalService: NzModalService,
     private message: NzMessageService
-    ) {
+  ) {
   }
 
   doRequest(method: RestType, apiOpt: ApiOption): Observable<any> {
@@ -143,7 +143,7 @@ export class RestApiService {
           const contentDisposition = headers.getAll('Content-Disposition');
           let filename = '';
           if (contentDisposition) {
-            const matches = /filename="(.*?)"/g.exec(contentDisposition[0]);
+            const matches = /filename=(.*?)/g.exec(contentDisposition[0]);
             filename = matches && matches.length > 1 ? decodeURIComponent(matches[1]) : '';
           }
 
@@ -179,14 +179,36 @@ export class RestApiService {
   }
 
   private handleError(error: HttpErrorResponse): any {
-    const errorMessage = '';
+    if (error.error.error && error.error.error.type === 'cluster_block_exception') {
+      this.modalService.error({
+        nzTitle: '错误',
+        nzContent: '数据库已锁定，请点击确定以解除锁定状态',
+        nzOnOk: () => {
+          const apiOpt = <ApiOption>{
+            apiKey: 'release',
+            body: {
+              index: {
+                blocks: {
+                  read_only_allow_delete: false
+                }
+              }
+            }
+          };
+          this.doRequest(RestType.PUT, apiOpt).subscribe(val => {
+            if (val) {}
+          });
+          this.modalService.closeAll();
+        }
+      });
+    } else {
+      this.modalService.error({
+        nzTitle: '错误',
+        nzContent: error.error.error.reason,
+        nzOnOk: () => this.modalService.closeAll()
+      });
+      throw new RestError(error);
+    }
 
-    this.modalService.error({
-      nzTitle: '错误',
-      nzContent: errorMessage,
-      nzOnOk: () => this.modalService.closeAll()
-    });
-    throw new RestError(error);
   }
 
 }

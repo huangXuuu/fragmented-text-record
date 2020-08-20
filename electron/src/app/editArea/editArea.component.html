@@ -1,42 +1,40 @@
-<div class="pageContainer">
-  <nz-card [nzBordered]="false">
-    <div nz-row>
-      <div nz-col [nzSpan]="24" class="pb-2">
-        <label>分类</label>
-        <nz-input-group [nzSuffix]="classSuffixTemplate">
-          <input nz-input placeholder="请输入或选择分类" [nzAutocomplete]="auto" [(ngModel)]="inputForm.class"
-            (ngModelChange)="onClassModelChange($event)">
-        </nz-input-group>
-        <nz-autocomplete #auto>
-          <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item">{{item}}</nz-auto-option>
-        </nz-autocomplete>
-        <ng-template #classSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
-            nzType="close-circle" *ngIf="inputForm.class" (click)="classClear()"></i></ng-template>
-      </div>
+<nz-card [nzBordered]="false">
+  <div nz-row>
+    <div nz-col [nzSpan]="24" class="pb-2">
+      <label>分类</label>
+      <nz-input-group [nzSuffix]="classSuffixTemplate">
+        <input nz-input placeholder="请输入或选择分类" [nzAutocomplete]="auto" [(ngModel)]="inputForm.class"
+          (ngModelChange)="onClassModelChange($event)">
+      </nz-input-group>
+      <nz-autocomplete #auto>
+        <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item">{{item}}</nz-auto-option>
+      </nz-autocomplete>
+      <ng-template #classSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+          nzType="close-circle" *ngIf="inputForm.class" (click)="classClear()"></i></ng-template>
     </div>
-    <div nz-row>
-      <div nz-col [nzSpan]="24" class="pb-2">
-        <label>标题</label>
-        <nz-input-group [nzSuffix]="titleSuffixTemplate">
-          <input nz-input placeholder="标题" [(ngModel)]="inputForm.title" />
-        </nz-input-group>
-        <ng-template #titleSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
-            nzType="close-circle" *ngIf="inputForm.title" (click)="inputForm.title = ''"></i></ng-template>
-      </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24" class="pb-2">
+      <label>标题</label>
+      <nz-input-group [nzSuffix]="titleSuffixTemplate">
+        <input nz-input placeholder="标题" [(ngModel)]="inputForm.title" />
+      </nz-input-group>
+      <ng-template #titleSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+          nzType="close-circle" *ngIf="inputForm.title" (click)="inputForm.title = ''"></i></ng-template>
     </div>
-    <div nz-row>
-      <div nz-col [nzSpan]="24">
-        <label>内容</label>
-        <textarea class="contentInput" nz-input [(ngModel)]="inputForm.content"></textarea>
-      </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24">
+      <label>内容</label>
+      <textarea class="contentInput" nz-input [(ngModel)]="inputForm.content"></textarea>
     </div>
-    <div nz-row class="mt-4">
-      <button *ngIf="mole === editMole.create" class="mr-4" nz-button nzType="primary" (click)="onSave()">
-        <i nz-icon nzType="plus-circle" nzTheme="outline"></i>新建
-      </button>
-      <button *ngIf="mole === editMole.edit" class="mr-4" nz-button nzType="primary" (click)="onSave()">
-        <i nz-icon nzType="save" nzTheme="outline"></i>更新
-      </button>
-    </div>
-  </nz-card>
-</div>
+  </div>
+  <div nz-row class="mt-4">
+    <button *ngIf="mole === editMole.create" class="mr-4" nz-button nzType="primary" (click)="onSave()">
+      <i nz-icon nzType="plus-circle" nzTheme="outline"></i>新建
+    </button>
+    <button *ngIf="mole === editMole.edit" class="mr-4" nz-button nzType="primary" (click)="onSave()">
+      <i nz-icon nzType="save" nzTheme="outline"></i>更新
+    </button>
+  </div>
+</nz-card>

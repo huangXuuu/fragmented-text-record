@@ -13,17 +13,19 @@ const instances = [];
 let cmdQPressed = false;
 
 function createWindow() {
+  require('./ipcMain');
   mainWindow = new BrowserWindow({
     show: false,
     minWidth: 900,
     minHeight: 600,
     webPreferences: {
       nodeIntegration: false,
+      webSecurity: false,
       preload: __dirname + '/preload.js'
     }
   });
   mainWindow.maximize();
-  mainWindow.loadURL(isDev ? 'http://localhost:4201' : `file://${path.join(__dirname, '../build/index.html')}`);
+  mainWindow.loadURL(isDev ? 'http://localhost:4201' : `file://${path.join(__dirname, '../dist/index.html')}`);
 
   mainWindow.on('closed', () => (mainWindow = null));
   mainWindow.show();

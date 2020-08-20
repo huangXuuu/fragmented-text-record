@@ -1,6 +1,8 @@
+import * as _ from 'lodash';
+
 export class Tool {
 
-  public static formatDate(date, fmt) {
+  public static formatDate(date, fmt = 'YYYY-MM-DD HH:mm:ss') {
     let ret;
     const opt = {
       'Y+': date.getFullYear().toString(),        // 年
@@ -20,5 +22,17 @@ export class Tool {
     }
 
     return fmt;
+  }
+
+  public static setRangDateFrom(date) {
+    const formatedDate = _.cloneDeep(date);
+    formatedDate.setHours(0, 0, 0);
+    return formatedDate;
+  }
+
+  public static setRangDateTo(date) {
+    const formatedDate = _.cloneDeep(date);
+    formatedDate.setHours(23, 59, 59);
+    return formatedDate;
   }
 }
