@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { RestApiService, RestType } from '../rest-api.service';
 import { ApiOption } from '../rest.service';
 import { Tool } from '../tool';
+import { IpcRendererService, IpcType } from '../ipc-renderer.service';
 
 const EditType = {
   preview: 'preview',    // 浏览
@@ -29,12 +30,25 @@ export class ListItemComponent implements OnInit {
   filteredOptions = [];
 
   constructor(
+    private ipcRendererService: IpcRendererService,
+    private ngZone: NgZone,
     private restApiService: RestApiService
   ) {
   }
 
   ngOnInit() {
     this.filteredOptions = this.options;
+    // 分类list取得
+    this.ipcRendererService.on(IpcType.getClassListSuccess, (event, arg) => {
+      this.ngZone.run(() => {
+        if (arg) {
+          this.options = arg;
+          this.filteredOptions = this.options;
+        }
+      });
+    });
+
+    this.ipcRendererService.send(IpcType.getClassList);
   }
 
   onSave() {
@@ -49,7 +63,7 @@ export class ListItemComponent implements OnInit {
           title: this.data.title,
           class: this.data.class,
           content: this.data.content,
-          updateDate: Tool.formatDate(new Date(), 'YYYY-MM-DD HH:mm:ss')
+          updateDate: Tool.formatDate(new Date())
         }
       }
     };
@@ -86,5 +100,10 @@ export class ListItemComponent implements OnInit {
 
   onClassModelChange(value: string): void {
     this.filteredOptions = this.options.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  classClear() {
+    this.data.class = '';
+    this.onClassModelChange('');
   }
 }

@@ -8,8 +8,8 @@ import requests
 import datetime
 from elasticsearch import Elasticsearch
 
-import xlrd
-import pandas as pd
+# import xlrd
+# import pandas as pd
 
 
 # ignore all warnings
@@ -41,7 +41,16 @@ item = {
     'createDate': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
     'updateDate': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 }
-res = es.index(index=INDEX_NAME, body=item, request_timeout=60)
+res = es.index(index=INDEX_NAME, body=item)
 
 print('data inserted!')
 
+# read_only_allow_delete
+# curl -H "Content-Type: application/json" -X PUT 'localhost:9200/_settings' -d '
+#     {
+#     "index": {
+#     "blocks": {
+#     "read_only_allow_delete": "false"
+#     }
+#     }
+#     }'

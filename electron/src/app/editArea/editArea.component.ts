@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { RestApiService, RestType } from '../shared/rest-api.service';
 import { ApiOption } from '../shared/rest.service';
 import { e } from '../shared/event';
 import { Tool } from '../shared/tool';
+import { IpcRendererService, IpcType } from '../shared/ipc-renderer.service';
 
 // 编辑模式
 const EditMole = {
@@ -33,6 +34,8 @@ export class EditAreaComponent implements OnInit  {
   mole = EditMole.create;
 
   constructor(
+    private ipcRendererService: IpcRendererService,
+    private ngZone: NgZone,
     private restApiService: RestApiService
   ) {
   }
@@ -40,6 +43,18 @@ export class EditAreaComponent implements OnInit  {
   ngOnInit() {
     this.filteredOptions = this.options;
     this.registeClearRecordListener();
+
+    // 分类list取得
+    this.ipcRendererService.on(IpcType.getClassListSuccess, (event, arg) => {
+      this.ngZone.run(() => {
+        if (arg) {
+          this.options = arg;
+          this.filteredOptions = this.options;
+        }
+      });
+    });
+
+    this.ipcRendererService.send(IpcType.getClassList);
   }
 
   onSave() {
@@ -61,8 +76,8 @@ export class EditAreaComponent implements OnInit  {
           title: this.inputForm.title,
           class: this.inputForm.class,
           content: this.inputForm.content,
-          createDate: Tool.formatDate(new Date(), 'YYYY-MM-DD HH:mm:ss'),
-          updateDate: Tool.formatDate(new Date(), 'YYYY-MM-DD HH:mm:ss')
+          createDate: Tool.formatDate(new Date()),
+          updateDate: Tool.formatDate(new Date())
         }
       };
     } else {
@@ -76,7 +91,7 @@ export class EditAreaComponent implements OnInit  {
             title: this.inputForm.title,
             class: this.inputForm.class,
             content: this.inputForm.content,
-            updateDate: Tool.formatDate(new Date(), 'YYYY-MM-DD HH:mm:ss')
+            updateDate: Tool.formatDate(new Date())
           }
         }
       };

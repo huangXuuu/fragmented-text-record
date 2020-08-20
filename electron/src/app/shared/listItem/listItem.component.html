@@ -55,7 +55,7 @@
           <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item">{{item}}</nz-auto-option>
         </nz-autocomplete>
         <ng-template #classSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
-            nzType="close-circle" *ngIf="data.class" (click)="data.class = ''"></i></ng-template>
+            nzType="close-circle" *ngIf="data.class" (click)="classClear()"></i></ng-template>
       </div>
       <div class="mr-4">
         <span>标题: </span>

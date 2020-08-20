@@ -10,11 +10,7 @@
 .pageContainer {
   background-color: #ECECEC;
   height: 100vh;
-}
-
-.mainContainer {
-  display: flex;
-  height: calc(100vh - 50px);
+  overflow: hidden;
 }
 
 .menuBtn {
@@ -24,8 +20,18 @@
   top: 5px;
 }
 
+.mainContainer {
+  display: flex;
+  height: calc(100vh - 50px);
+}
+
 .searchList {
+  margin: 15px;
   width: 100%;
+}
+
+.editArea {
+  margin: 15px 15px 15px 0;
 }
 
 .editAreaClose {
@@ -33,14 +39,12 @@
 }
 
 .editAreaOpen {
-  height: 100%;
   transition: none;
   animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s 1 both;
 }
 
 @keyframes fadeIn {
   0% {
-    display: block;
     width: 0px;
   }
 
@@ -55,7 +59,6 @@
   }
 
   100% {
-    display: none;
     width: 0px;
   }
 }

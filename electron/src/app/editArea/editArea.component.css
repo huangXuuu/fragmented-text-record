@@ -1,7 +1,5 @@
 .pageContainer {
-  width: 100%;
-  height: 100%;
-  padding: 30px 0px;
+  margin: 15px 15px;
 }
 
 .pageContainer >>> .ant-card {
@@ -9,7 +7,7 @@
 }
 
 .contentInput {
-  height: calc(100vh - 400px);
+  height: calc(100vh - 350px);
   resize: none;
   overflow: auto;
 }
