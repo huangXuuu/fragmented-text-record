@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, NgZone } from '@angular
 import { RestApiService, RestType } from '../rest-api.service';
 import { ApiOption } from '../rest.service';
 import { Tool } from '../tool';
-import { IpcRendererService, IpcType } from '../ipc-renderer.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Globals } from '../global';
 
 const EditType = {
   preview: 'preview',    // 浏览
@@ -25,35 +26,23 @@ export class ListItemComponent implements OnInit {
 
   editType = EditType.preview;
 
-  options = ['培训', '日常会议', '客户'];
-
   filteredOptions = [];
 
   constructor(
-    private ipcRendererService: IpcRendererService,
-    private ngZone: NgZone,
-    private restApiService: RestApiService
+    private restApiService: RestApiService,
+    private message: NzMessageService,
+    private globals: Globals
   ) {
   }
 
   ngOnInit() {
-    this.filteredOptions = this.options;
-    // 分类list取得
-    this.ipcRendererService.on(IpcType.getClassListSuccess, (event, arg) => {
-      this.ngZone.run(() => {
-        if (arg) {
-          this.options = arg;
-          this.filteredOptions = this.options;
-        }
-      });
-    });
-
-    this.ipcRendererService.send(IpcType.getClassList);
+    this.filteredOptions = this.globals.classList;
   }
 
   onSave() {
     const endpointParams = new Map<string, string>();
     endpointParams.set('id', this.data.id);
+    endpointParams.set('index', this.globals.currentIndex);
 
     const apiOpt = <ApiOption>{
       apiKey: 'edit',
@@ -68,13 +57,16 @@ export class ListItemComponent implements OnInit {
       }
     };
     this.restApiService.doRequest(RestType.POST, apiOpt).subscribe(val => {
-      if (val) {}
+      if (val) {
+        this.message.info('保存成功！');
+      }
     });
   }
 
   onDelete() {
     const endpointParams = new Map<string, string>();
     endpointParams.set('id', this.data.id);
+    endpointParams.set('index', this.globals.currentIndex);
 
     const apiOpt = <ApiOption>{
       apiKey: 'delete',
@@ -86,6 +78,7 @@ export class ListItemComponent implements OnInit {
           type: 'delete',
           index: this.index
         });
+        this.message.info('删除成功！');
       }
     });
   }
@@ -99,7 +92,11 @@ export class ListItemComponent implements OnInit {
   }
 
   onClassModelChange(value: string): void {
-    this.filteredOptions = this.options.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.filteredOptions = this.globals.classList.filter(option => {
+      if (option) {
+        return option.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+      }
+    });
   }
 
   classClear() {

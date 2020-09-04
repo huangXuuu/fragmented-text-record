@@ -7,7 +7,7 @@
           (ngModelChange)="onClassModelChange($event)">
       </nz-input-group>
       <nz-autocomplete #auto>
-        <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item">{{item}}</nz-auto-option>
+        <nz-auto-option *ngFor="let item of filteredOptions" [nzValue]="item.name">{{item.name}}</nz-auto-option>
       </nz-autocomplete>
       <ng-template #classSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
           nzType="close-circle" *ngIf="searchForm.class" (click)="classClear()"></i></ng-template>

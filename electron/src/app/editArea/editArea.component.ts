@@ -3,7 +3,8 @@ import { RestApiService, RestType } from '../shared/rest-api.service';
 import { ApiOption } from '../shared/rest.service';
 import { e } from '../shared/event';
 import { Tool } from '../shared/tool';
-import { IpcRendererService, IpcType } from '../shared/ipc-renderer.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Globals } from '../shared/global';
 
 // 编辑模式
 const EditMole = {
@@ -16,7 +17,7 @@ const EditMole = {
   templateUrl: './editArea.component.html',
   styleUrls: ['./editArea.component.css']
 })
-export class EditAreaComponent implements OnInit  {
+export class EditAreaComponent implements OnInit {
 
   inputForm = {
     id: '',
@@ -25,8 +26,6 @@ export class EditAreaComponent implements OnInit  {
     content: ''       // 内容
   };
 
-  options = ['培训', '日常会议', '客户'];
-
   filteredOptions = [];
 
   editMole = EditMole;
@@ -34,27 +33,15 @@ export class EditAreaComponent implements OnInit  {
   mole = EditMole.create;
 
   constructor(
-    private ipcRendererService: IpcRendererService,
-    private ngZone: NgZone,
-    private restApiService: RestApiService
+    private message: NzMessageService,
+    private restApiService: RestApiService,
+    private globals: Globals
   ) {
   }
 
   ngOnInit() {
-    this.filteredOptions = this.options;
+    this.filteredOptions = this.globals.classList;
     this.registeClearRecordListener();
-
-    // 分类list取得
-    this.ipcRendererService.on(IpcType.getClassListSuccess, (event, arg) => {
-      this.ngZone.run(() => {
-        if (arg) {
-          this.options = arg;
-          this.filteredOptions = this.options;
-        }
-      });
-    });
-
-    this.ipcRendererService.send(IpcType.getClassList);
   }
 
   onSave() {
@@ -63,6 +50,7 @@ export class EditAreaComponent implements OnInit  {
       if (val) {
         this.mole = EditMole.edit;
         this.inputForm.id = val._id;
+        this.message.info('保存成功');
       }
     });
   }
@@ -70,8 +58,12 @@ export class EditAreaComponent implements OnInit  {
   getApiOption() {
     let opt = <ApiOption>{};
     if (this.mole === EditMole.create) {
+      const urlEndpointParams = new Map();
+      urlEndpointParams.set('index', this.globals.currentIndex);
+
       opt = <ApiOption>{
         apiKey: 'insert',
+        urlEndpointParams: urlEndpointParams,
         body: {
           title: this.inputForm.title,
           class: this.inputForm.class,
@@ -83,6 +75,8 @@ export class EditAreaComponent implements OnInit  {
     } else {
       const endpointParams = new Map<string, string>();
       endpointParams.set('id', this.inputForm.id);
+      endpointParams.set('index', this.globals.currentIndex);
+
       opt = <ApiOption>{
         apiKey: 'edit',
         urlEndpointParams: endpointParams,
@@ -101,7 +95,11 @@ export class EditAreaComponent implements OnInit  {
   }
 
   onClassModelChange(value: string): void {
-    this.filteredOptions = this.options.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.filteredOptions = this.globals.classList.filter(option => {
+      if (option) {
+        return option.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+      }
+    });
   }
 
   classClear() {

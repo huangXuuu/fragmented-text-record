@@ -3,12 +3,17 @@
   height: 25px;
   background: #ffffff;
   color: rgb(0 0 0 / 60%);
+  text-align: center;
 }
 
 .pageContainer {
   background-color: #ECECEC;
   height: 100vh;
   overflow: hidden;
+}
+
+.title button {
+  height: 25px;
 }
 
 .menuBtn {
@@ -18,11 +23,19 @@
   top: 0;
 }
 
-.menuBtn > button {
-  height: 25px;
+.handleMenu {
+  position: absolute;
+  left: 10px;
+  top: 0;
 }
 
-.mainContainer {
+.noIndexWarning {
+  color: red;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.recordContainer {
   display: flex;
   height: calc(100vh - 25px);
 }
@@ -30,6 +43,12 @@
 .searchList {
   margin: 15px;
   width: 100%;
+}
+
+.manageContainer {
+  margin: 15px;
+  overflow: auto;
+  height: calc(100vh - 55px);;
 }
 
 .editArea {

@@ -1,20 +1,39 @@
 <div class="pageContainer">
-  <div class="title">
-    <div class="menuBtn">
-      <button nz-button nzType="primary" class="mr-2" (click)="clearRecode()">新建
-      </button>
-      <button nz-button nzType="primary" (click)="isEditAreaOpen = !isEditAreaOpen">
-        <i nz-icon nzType="menu" nzTheme="outline"></i>
-      </button>
+  <ng-container *ngIf="pageType === _pageType.record">
+    <div class="title">
+      <div class="handleMenu">
+        <button nz-button nzType="primary" class="ml-2" (click)="toManage()">管理模式
+        </button>
+      </div>
+      <div *ngIf="globals.currentAlias">记录模式——{{globals.currentAlias}}</div>
+      <div *ngIf="!globals.currentAlias" class="noIndexWarning"><---------------请指定文集！！</div>
+      <div class="menuBtn">
+        <button nz-button nzType="primary" class="mr-2" (click)="clearRecode()">新建
+        </button>
+        <button nz-button nzType="primary" (click)="isEditAreaOpen = !isEditAreaOpen">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="mainContainer">
+  </ng-container>
+  <ng-container *ngIf="pageType === _pageType.manage">
+    <div class="title">
+      <div class="handleMenu">
+        <button nz-button nzType="primary" class="ml-2" (click)="toRecord()">记录模式
+        </button>
+      </div>
+      <div>管理模式</div>
+    </div>
+  </ng-container>
+  <div class="recordContainer" *ngIf="pageType === _pageType.record && globals.currentAlias">
     <div class="searchList">
       <app-search-list></app-search-list>
     </div>
-    <div class="editArea" [class.editAreaOpen]="isEditAreaOpen"
-    [class.editAreaClose]="!isEditAreaOpen">
+    <div class="editArea" [class.editAreaOpen]="isEditAreaOpen" [class.editAreaClose]="!isEditAreaOpen">
       <app-edit-area></app-edit-area>
     </div>
+  </div>
+  <div class="manageContainer" *ngIf="pageType === _pageType.manage">
+    <app-manage></app-manage>
   </div>
 </div>

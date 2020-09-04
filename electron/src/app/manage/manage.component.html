@@ -1,0 +1,84 @@
+<nz-card [nzBordered]="false" nzTitle="数据库启动文件设置">
+  <div class="dbPathArea mb-4">
+    <label>{{globals.dbPath}}</label>
+    <div>
+      <button nz-button nzType="primary" (click)="setDBPath()">
+        <i nz-icon nzType="setting" nzTheme="outline"></i>设置
+      </button>
+      <button [disabled]="!globals.dbPath" class="ml-4" nz-button nzType="primary" (click)="DBStartUp()">
+        <i nz-icon nzType="step-forward" nzTheme="outline"></i>起动
+      </button>
+    </div>
+  </div>
+</nz-card>
+<nz-card class="mt-4" [nzBordered]="false" nzTitle="文集信息">
+  <div class="createArea mb-4">
+    <div>
+      <nz-input-group [nzSuffix]="contentSuffixTemplate">
+        <input nz-input placeholder="请输入文集名" [(ngModel)]="createIndexName" />
+      </nz-input-group>
+      <ng-template #contentSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+          nzType="close-circle" *ngIf="createIndexName" (click)="createIndexName = ''"></i>
+      </ng-template>
+    </div>
+    <button class="ml-4" nz-button nzType="primary" (click)="create()">
+      <i nz-icon nzType="file-add" nzTheme="outline"></i>新建
+    </button>
+  </div>
+  <nz-table #indexTable [nzData]="indexList" [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th style="width: 100px;">当前使用</th>
+        <th>文集名</th>
+        <th style="width: 100px;">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of indexTable.data; index as i">
+        <td class="text-center">
+          <input class="radioSize" type="radio" [ngModel]="globals.currentAlias" (change)="selectedAliasChange(item)"
+            value="{{item.alias}}" name="'alias'">
+        </td>
+        <td>{{item?.alias}}</td>
+        <td>
+          <button nz-button nzType="danger" nz-popover [nzPopoverContent]="'删除'" nzPopoverTrigger="hover" nz-popconfirm
+            nzPopconfirmTitle="删除后文集内的全部消息将被清空。确定要删除吗？" (nzOnConfirm)="onDelete(item)">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<nz-card class="mt-4" [nzBordered]="false" nzTitle="分类管理">
+  <div class="createArea mb-4">
+    <button class="ml-4" nz-button nzType="primary" (click)="createClass()">
+      <i nz-icon nzType="file-add" nzTheme="outline"></i>新建
+    </button>
+  </div>
+  <nz-table #classTable [nzData]="globals.classList" [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th>分类名</th>
+        <th style="width: 100px;">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of classTable.data; index as i">
+        <td>
+          <nz-input-group [nzSuffix]="classSuffixTemplate">
+            <input nz-input placeholder="请填写分类项目" [(ngModel)]="item.name" />
+          </nz-input-group>
+          <ng-template #classSuffixTemplate><i nz-icon nz-tooltip class="ant-input-clear-icon" nzTheme="fill"
+              nzType="close-circle" *ngIf="item.name" (click)="item.name = ''"></i></ng-template>
+        </td>
+        <td>
+          <button nz-button nzType="danger" nz-popover [nzPopoverContent]="'删除'" nzPopoverTrigger="hover" nz-popconfirm
+            nzPopconfirmTitle="确定要删除吗？" (nzOnConfirm)="deleteClass(i)">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
