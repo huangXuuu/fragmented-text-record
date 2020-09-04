@@ -30,7 +30,7 @@ function createWindow() {
         preload: __dirname + '/preload.js'
       }
     });
-    mainWindow.loadURL(isDev ? 'http://localhost:4201' : `file://${path.join(__dirname, '../dist/index.html')}`);
+    mainWindow.loadURL(isDev ? 'http://localhost:4200' : `file://${path.join(__dirname, '../dist/index.html')}`);
   
     mainWindow.on('closed', () => (mainWindow = null));
     mainWindow.show();

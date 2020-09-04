@@ -6,7 +6,6 @@ import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { RestService, RestError, ApiOption } from './rest.service';
 import { environment } from '../../environments/environment';
 import { NzModalService } from 'ng-zorro-antd';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import * as _ from 'lodash';
 
 export enum RestType {
@@ -25,7 +24,6 @@ export class RestApiService {
 
   constructor(private restService: RestService,
     private modalService: NzModalService,
-    private message: NzMessageService
   ) {
   }
 
@@ -71,7 +69,6 @@ export class RestApiService {
       default:
         throw new Error('requestWrapp mehod not supported.');
     }
-    this.message.info('操作成功');
     return apiObservable;
   }
 

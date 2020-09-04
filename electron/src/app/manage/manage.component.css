@@ -1,0 +1,18 @@
+.createArea {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dbPathArea {
+  display: flex;
+  justify-content: space-between;
+}
+
+.radioSize {
+  zoom: 1.4;
+  cursor: pointer;
+}
+
+nz-table >>> .ant-table-placeholder {
+  display: none;
+}

@@ -13,8 +13,10 @@ import { AppComponent } from './app.component';
 import { SearchListComponent } from './searchList/searchList.component';
 import { EditAreaComponent } from './editArea/editArea.component';
 import { MainComponent } from './main/main.component';
+import { ManageComponent } from './manage/manage.component';
 import { ListItemComponent } from './shared/listItem/listItem.component';
 import { ICONS_AUTO } from '../style-icons-auto';
+import { Globals } from './shared/global';
 
 
 import zh from '@angular/common/locales/zh';
@@ -30,7 +32,8 @@ const ngZorroConfig: NzConfig = {
     SearchListComponent,
     ListItemComponent,
     MainComponent,
-    EditAreaComponent
+    EditAreaComponent,
+    ManageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,10 +43,11 @@ const ngZorroConfig: NzConfig = {
     AppRoutingModule,
     NgZorroAntdModule,
     ReactiveFormsModule,
-    EscapeHtmlModule
+    EscapeHtmlModule,
   ],
   bootstrap: [AppComponent],
   providers: [
+    Globals,
     { provide: NZ_CONFIG, useValue: ngZorroConfig },
     { provide: NZ_ICONS, useValue: ICONS_AUTO }
   ]

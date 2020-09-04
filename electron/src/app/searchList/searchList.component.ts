@@ -5,6 +5,7 @@ import { Tool } from '../shared/tool';
 import * as _ from 'lodash';
 import { IpcRendererService, IpcType } from '../shared/ipc-renderer.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Globals } from '../shared/global';
 
 const QueryDateType = {
   create: 'createDate',
@@ -29,9 +30,6 @@ export class SearchListComponent implements OnInit {
     dateType: QueryDateType.create,       // 日期检索模式
     content: '',                          // 内容
   };
-
-  // 分类list
-  options = ['培训', '日常会议', '客户'];
 
   // 日期检索类型
   dateQueryList = [
@@ -72,12 +70,13 @@ export class SearchListComponent implements OnInit {
     private restApiService: RestApiService,
     private ipcRendererService: IpcRendererService,
     private ngZone: NgZone,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private globals: Globals
   ) {
   }
 
   ngOnInit() {
-    this.filteredOptions = this.options;
+    this.filteredOptions = this.globals.classList;
     this.initSearchForm();
     this.ipcRendererService.on(IpcType.exportSuccess, (event, arg) => {
       this.ngZone.run(() => {
@@ -86,18 +85,6 @@ export class SearchListComponent implements OnInit {
         }
       });
     });
-
-    // 分类list取得
-    this.ipcRendererService.on(IpcType.getClassListSuccess, (event, arg) => {
-      this.ngZone.run(() => {
-        if (arg) {
-          this.options = arg;
-          this.filteredOptions = this.options;
-        }
-      });
-    });
-
-    this.ipcRendererService.send(IpcType.getClassList);
   }
 
   // 清空
@@ -107,11 +94,16 @@ export class SearchListComponent implements OnInit {
 
   // 搜索
   onSearch() {
+    const urlEndpointParams = new Map();
+    urlEndpointParams.set('index', this.globals.currentIndex);
+
     const apiOpt = <ApiOption>{
       apiKey: 'getSearchList',
+      urlEndpointParams: urlEndpointParams,
       body: this.setQuery()
     };
     this.restApiService.doRequest(RestType.POST, apiOpt).subscribe(val => {
+      this.message.info('搜索成功！');
       this.data = [];
       this.responseData = {};
       this.searched = true;
@@ -227,7 +219,11 @@ export class SearchListComponent implements OnInit {
   }
 
   onClassModelChange(value: string): void {
-    this.filteredOptions = this.options.filter(option => option.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.filteredOptions = this.globals.classList.filter(option => {
+      if (option) {
+        return option.toLowerCase().indexOf(value.toLowerCase()) !== -1;
+      }
+    });
   }
 
   onListItemChange($event) {
